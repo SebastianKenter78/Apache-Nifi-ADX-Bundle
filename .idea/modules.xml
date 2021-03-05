@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/adx-processor.iml" filepath="$PROJECT_DIR$/adx-processor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nifi-adx/nifi-adx.iml" filepath="$PROJECT_DIR$/nifi-adx/nifi-adx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nifi-adx-api/nifi-adx-api.iml" filepath="$PROJECT_DIR$/nifi-adx-api/nifi-adx-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nifi-adx-nar/nifi-adx-nar.iml" filepath="$PROJECT_DIR$/nifi-adx-nar/nifi-adx-nar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nifi-adx-processors/nifi-adx-processors.iml" filepath="$PROJECT_DIR$/nifi-adx-processors/nifi-adx-processors.iml" />
+    </modules>
+  </component>
+</project>
