@@ -22,7 +22,7 @@ import org.apache.nifi.util.TestRunners;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestStandardMyService {
+public class TestAzureAdxConnectionService {
 
     @Before
     public void init() {
@@ -31,14 +31,14 @@ public class TestStandardMyService {
 
     @Test
     public void testService() throws InitializationException {
-        final TestRunner runner = TestRunners.newTestRunner(TestProcessor.class);
-        final StandardMyService service = new StandardMyService();
+        final TestRunner runner = TestRunners.newTestRunner(TestAzureAdxIngestProcessor.class);
+        final IAzureAdxConnectionService service = new AzureAdxConnectionService();
         runner.addControllerService("test-good", service);
 
-        runner.setProperty(service, StandardMyService.INGEST_URL, "http://test.com");
-        runner.setProperty(service, StandardMyService.APP_ID, "1234");
-        runner.setProperty(service, StandardMyService.APP_KEY, "1234");
-        runner.setProperty(service, StandardMyService.APP_TENANT, "1234");
+        runner.setProperty(service, AzureAdxConnectionService.INGEST_URL, "http://test.com");
+        runner.setProperty(service, AzureAdxConnectionService.APP_ID, "1234");
+        runner.setProperty(service, AzureAdxConnectionService.APP_KEY, "1234");
+        runner.setProperty(service, AzureAdxConnectionService.APP_TENANT, "1234");
         runner.enableControllerService(service);
 
         runner.assertValid(service);

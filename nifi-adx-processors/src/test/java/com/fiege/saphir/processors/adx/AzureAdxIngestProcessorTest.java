@@ -22,13 +22,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-public class MyProcessorTest {
+public class AzureAdxIngestProcessorTest {
 
     private TestRunner testRunner;
 
     @Before
     public void init() {
-        testRunner = TestRunners.newTestRunner(MyProcessor.class);
+        testRunner = TestRunners.newTestRunner(AzureAdxIngestProcessor.class);
     }
 
     @Test
