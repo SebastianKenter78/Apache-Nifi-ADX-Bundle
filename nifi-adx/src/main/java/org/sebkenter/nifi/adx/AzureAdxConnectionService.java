@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fiege.saphir.adx;
+package org.sebkenter.nifi.adx;
 
 import java.io.IOException;
 import java.util.ArrayList;

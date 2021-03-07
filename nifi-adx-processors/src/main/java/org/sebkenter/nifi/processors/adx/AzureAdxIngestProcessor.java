@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fiege.saphir.processors.adx;
+package org.sebkenter.nifi.processors.adx;
 
-import com.fiege.saphir.adx.IAzureAdxConnectionService;
+import org.sebkenter.nifi.adx.IAzureAdxConnectionService;
 import com.microsoft.azure.kusto.ingest.IngestClient;
 import com.microsoft.azure.kusto.ingest.IngestionMapping;
 import com.microsoft.azure.kusto.ingest.IngestionProperties;
@@ -27,7 +27,6 @@ import com.microsoft.azure.kusto.ingest.result.IngestionStatus;
 import com.microsoft.azure.kusto.ingest.result.OperationStatus;
 import com.microsoft.azure.kusto.ingest.source.StreamSourceInfo;
 import com.microsoft.azure.storage.StorageException;
-import org.apache.nifi.authorization.AuthorizerLookup;
 import org.apache.nifi.components.AllowableValue;
 import org.apache.nifi.components.PropertyDescriptor;
 import org.apache.nifi.flowfile.FlowFile;
@@ -219,7 +218,7 @@ public class AzureAdxIngestProcessor extends AbstractProcessor {
 
     public static final Relationship RL_SUCCEEDED = new Relationship.Builder()
             .name("RL_SUCCEEDED")
-            .description("Relationsship for success")
+            .description("Relationship for success")
             .build();
 
     public static final Relationship RL_FAILED = new Relationship.Builder()
@@ -313,7 +312,7 @@ public class AzureAdxIngestProcessor extends AbstractProcessor {
                 case "IRM_TABLEANDQUEUE": ingestionProperties.setReportMethod(QueueAndTable);
             }
 
-            if (context.getProperty(FLUSH_IMMEDIATE).getValue() == "true")
+            if (context.getProperty(FLUSH_IMMEDIATE).getValue().equals("true"))
             {
                 ingestionProperties.setFlushImmediately(true);
             }
@@ -327,7 +326,6 @@ public class AzureAdxIngestProcessor extends AbstractProcessor {
 
             List<IngestionStatus> statuses = result.getIngestionStatusCollection();
 
-            // step 3: poll on the result.
             while (statuses.get(0).status == OperationStatus.Pending) {
                 Thread.sleep(50);
                 statuses = result.getIngestionStatusCollection();

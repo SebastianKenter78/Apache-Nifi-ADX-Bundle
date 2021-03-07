@@ -14,26 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fiege.saphir.processors.adx;
+package org.sebkenter.nifi.adx;
 
-import org.apache.nifi.util.TestRunner;
-import org.apache.nifi.util.TestRunners;
-import org.junit.Before;
-import org.junit.Test;
+import com.microsoft.azure.kusto.ingest.IngestClient;
+import org.apache.nifi.annotation.documentation.CapabilityDescription;
+import org.apache.nifi.annotation.documentation.Tags;
+import org.apache.nifi.controller.ControllerService;
+import org.apache.nifi.processor.exception.ProcessException;
 
+@Tags({"example"})
+@CapabilityDescription("Example Service API.")
+public interface IAzureAdxConnectionService extends ControllerService {
 
-public class AzureAdxIngestProcessorTest {
-
-    private TestRunner testRunner;
-
-    @Before
-    public void init() {
-        testRunner = TestRunners.newTestRunner(AzureAdxIngestProcessor.class);
-    }
-
-    @Test
-    public void testProcessor() {
-
-    }
+    void execute()  throws ProcessException;
+    IngestClient getAdxClient();
 
 }
