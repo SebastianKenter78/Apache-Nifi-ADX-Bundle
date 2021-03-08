@@ -39,7 +39,7 @@ import org.apache.nifi.reporting.InitializationException;
 
 @Tags({ "Azure", "ADX", "Kusto", "ingest", "azure"})
 @CapabilityDescription("Sends batches of flowfile content to an azure adx cluster.")
-public class AzureAdxConnectionService extends AbstractControllerService implements IAzureAdxConnectionService {
+public class AzureAdxConnectionService extends AbstractControllerService implements AdxConnectionService {
 
     public static final PropertyDescriptor INGEST_URL = new PropertyDescriptor
             .Builder().name("INGEST_URL")

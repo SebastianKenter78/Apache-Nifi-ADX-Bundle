@@ -8,9 +8,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: com.fiege.saphir:nifi-adx-processors:1.0" level="project" />
-    <orderEntry type="library" name="Maven: com.fiege.saphir:nifi-adx:1.0" level="project" />
-    <orderEntry type="library" name="Maven: com.fiege.saphir:nifi-adx-api:1.0" level="project" />
+    <orderEntry type="module" module-name="nifi-adx-processors" />
+    <orderEntry type="module" module-name="nifi-adx" />
+    <orderEntry type="module" module-name="nifi-adx-api" />
     <orderEntry type="library" name="Maven: org.apache.nifi:nifi-processor-utils:1.13.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.nifi:nifi-security-utils:1.13.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.nifi:nifi-security-utils-api:1.13.0" level="project" />

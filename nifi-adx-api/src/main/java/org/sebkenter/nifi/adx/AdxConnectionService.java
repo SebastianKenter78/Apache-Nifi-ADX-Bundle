@@ -24,7 +24,7 @@ import org.apache.nifi.processor.exception.ProcessException;
 
 @Tags({"example"})
 @CapabilityDescription("Example Service API.")
-public interface IAzureAdxConnectionService extends ControllerService {
+public interface AdxConnectionService extends ControllerService {
 
     void execute()  throws ProcessException;
     IngestClient getAdxClient();

@@ -16,7 +16,7 @@
  */
 package org.sebkenter.nifi.processors.adx;
 
-import org.sebkenter.nifi.adx.IAzureAdxConnectionService;
+import org.sebkenter.nifi.adx.AdxConnectionService;
 import com.microsoft.azure.kusto.ingest.IngestClient;
 import com.microsoft.azure.kusto.ingest.IngestionMapping;
 import com.microsoft.azure.kusto.ingest.IngestionProperties;
@@ -204,7 +204,7 @@ public class AzureAdxIngestProcessor extends AbstractProcessor {
             .displayName("AzureADXConnectionService")
             .description("Service that provides the ADX-Connections.")
             .required(true)
-            .identifiesControllerService(IAzureAdxConnectionService.class)
+            .identifiesControllerService(AdxConnectionService.class)
             .build();
 
     public static final Relationship RL_SUCCEEDED = new Relationship.Builder()
@@ -262,7 +262,7 @@ public class AzureAdxIngestProcessor extends AbstractProcessor {
             return;
         }
 
-        IAzureAdxConnectionService service = context.getProperty(ADX_SERVICE).asControllerService(IAzureAdxConnectionService.class);
+        AdxConnectionService service = context.getProperty(ADX_SERVICE).asControllerService(AdxConnectionService.class);
 
         try (final InputStream in = session.read(flowFile))
         {
@@ -275,31 +275,31 @@ public class AzureAdxIngestProcessor extends AbstractProcessor {
                     IngestionMapping.IngestionMappingKind.Json);
 
             switch(context.getProperty(DATA_FORMAT).getValue()) {
-                case "AVRO": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.avro);
-                case "APACHEAVRO": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.apacheavro);
-                case "CSV": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.csv);
-                case "JSON": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.json);
-                case "MULTIJSON": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.multijson);
-                case "ORC": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.orc);
-                case "PARQUET": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.parquet);
-                case "PSV": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.psv);
-                case "SCSV": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.scsv);
-                case "SOHSV": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.sohsv);
-                case "TSV": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.tsv);
-                case "TSVE": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.tsve);
-                case "TXT": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.txt);
+                case "AVRO": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.avro); break;
+                case "APACHEAVRO": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.apacheavro); break;
+                case "CSV": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.csv); break;
+                case "JSON": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.json); break;
+                case "MULTIJSON": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.multijson); break;
+                case "ORC": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.orc); break;
+                case "PARQUET": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.parquet); break;
+                case "PSV": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.psv); break;
+                case "SCSV": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.scsv); break;
+                case "SOHSV": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.sohsv); break;
+                case "TSV": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.tsv); break;
+                case "TSVE": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.tsve); break;
+                case "TXT": ingestionProperties.setDataFormat(IngestionProperties.DATA_FORMAT.txt); break;
             }
 
             switch(context.getProperty(IR_LEVEL).getValue()) {
-                case "IRL_NONE": ingestionProperties.setReportLevel(IngestionProperties.IngestionReportLevel.None);
-                case "IRL_FAIL": ingestionProperties.setReportLevel(IngestionProperties.IngestionReportLevel.FailuresOnly);
-                case "IRL_FAS": ingestionProperties.setReportLevel(IngestionProperties.IngestionReportLevel.FailuresAndSuccesses);
+                case "IRL_NONE": ingestionProperties.setReportLevel(IngestionProperties.IngestionReportLevel.None); break;
+                case "IRL_FAIL": ingestionProperties.setReportLevel(IngestionProperties.IngestionReportLevel.FailuresOnly); break;
+                case "IRL_FAS": ingestionProperties.setReportLevel(IngestionProperties.IngestionReportLevel.FailuresAndSuccesses); break;
             }
 
             switch (context.getProperty(IR_METHOD).getValue()) {
-                case "IRM_TABLE": ingestionProperties.setReportMethod(Table);
-                case "IRM_QUEUE": ingestionProperties.setReportMethod(IngestionProperties.IngestionReportMethod.Queue);
-                case "IRM_TABLEANDQUEUE": ingestionProperties.setReportMethod(QueueAndTable);
+                case "IRM_TABLE": ingestionProperties.setReportMethod(Table); break;
+                case "IRM_QUEUE": ingestionProperties.setReportMethod(IngestionProperties.IngestionReportMethod.Queue); break;
+                case "IRM_TABLEANDQUEUE": ingestionProperties.setReportMethod(QueueAndTable); break;
             }
 
             if (context.getProperty(FLUSH_IMMEDIATE).getValue().equals("true"))
@@ -310,7 +310,14 @@ public class AzureAdxIngestProcessor extends AbstractProcessor {
                 ingestionProperties.setFlushImmediately(false);
             }
 
-            getLogger().info("Ingesting with: " + ingestionProperties.toString());
+            getLogger().info("Ingesting with: " + ingestionProperties.getDataFormat() +
+                    "|" + ingestionProperties.getIngestionMapping() +
+                    "|" + ingestionProperties.getReportLevel() +
+                    "|" + ingestionProperties.getReportMethod() +
+                    "|" + ingestionProperties.getDatabaseName() +
+                    "|" + ingestionProperties.getTableName() +
+                    "|" + ingestionProperties.getFlushImmediately()
+            );
 
             StreamSourceInfo info = new StreamSourceInfo(in);
 

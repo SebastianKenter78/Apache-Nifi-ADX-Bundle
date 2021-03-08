@@ -37,7 +37,7 @@ public class TestAzureAdxIngestProcessor extends AbstractProcessor {
         propDescs.add(new PropertyDescriptor.Builder()
                 .name("MyService test processor")
                 .description("MyService test processor")
-                .identifiesControllerService(IAzureAdxConnectionService.class)
+                .identifiesControllerService(AdxConnectionService.class)
                 .required(true)
                 .build());
         return propDescs;

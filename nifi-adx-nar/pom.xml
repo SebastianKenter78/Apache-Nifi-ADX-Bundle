@@ -32,7 +32,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.fiege.saphir</groupId>
+            <groupId>org.sebkenter.nifi</groupId>
             <artifactId>nifi-adx-processors</artifactId>
             <version>1.0</version>
         </dependency>

@@ -24,6 +24,7 @@
 
     <artifactId>nifi-adx-processors</artifactId>
     <packaging>jar</packaging>
+    <version>1.0</version>
 
     <dependencies>
         <dependency>

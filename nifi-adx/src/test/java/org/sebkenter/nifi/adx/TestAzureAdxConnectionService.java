@@ -32,7 +32,7 @@ public class TestAzureAdxConnectionService {
     @Test
     public void testService() throws InitializationException {
         final TestRunner runner = TestRunners.newTestRunner(TestAzureAdxIngestProcessor.class);
-        final IAzureAdxConnectionService service = new AzureAdxConnectionService();
+        final AzureAdxConnectionService service = new AzureAdxConnectionService();
         runner.addControllerService("test-good", service);
 
         runner.setProperty(service, AzureAdxConnectionService.INGEST_URL, "http://test.com");
