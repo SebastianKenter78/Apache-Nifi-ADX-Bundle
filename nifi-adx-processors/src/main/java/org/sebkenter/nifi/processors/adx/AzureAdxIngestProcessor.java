@@ -81,7 +81,7 @@ public class AzureAdxIngestProcessor extends AbstractProcessor {
                     "see JSON Lines (JSONL).");
 
     public static final AllowableValue MULTIJSON = new AllowableValue(
-            "MULTIJSON", ".json",
+            "MULTIJSON", ".multijson",
             "A text file containing a JSON array of property containers (each representing a record) or any " +
                     "number of property containers separated by spaces, \\n or \\r\\n. Each property container may be " +
                     "spread across multiple lines. This format is preferable to JSON unless the data is not property " +
@@ -163,15 +163,6 @@ public class AzureAdxIngestProcessor extends AbstractProcessor {
             .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
             .build();
 
-    static final PropertyDescriptor MAX_BATCH_SIZE = new PropertyDescriptor.Builder()
-            .name("MAX_BATCH_SIZE")
-            .displayName("Maximum batch size")
-            .description("Maximum count of flow files being processed in one batch.")
-            .required(true)
-            .addValidator(StandardValidators.NUMBER_VALIDATOR)
-            .defaultValue("100")
-            .build();
-
     static final PropertyDescriptor FLUSH_IMMEDIATE = new PropertyDescriptor.Builder()
             .name("FLUSH_IMMEDIATE")
             .displayName("Flush immediate")
@@ -237,7 +228,6 @@ public class AzureAdxIngestProcessor extends AbstractProcessor {
         descriptors.add(DB_NAME);
         descriptors.add(TABLE_NAME);
         descriptors.add(MAPPING_NAME);
-        descriptors.add(MAX_BATCH_SIZE);
         descriptors.add(FLUSH_IMMEDIATE);
         descriptors.add(DATA_FORMAT);
         descriptors.add(IR_LEVEL);
@@ -320,6 +310,8 @@ public class AzureAdxIngestProcessor extends AbstractProcessor {
                 ingestionProperties.setFlushImmediately(false);
             }
 
+            getLogger().info("Ingesting with: " + ingestionProperties.toString());
+
             StreamSourceInfo info = new StreamSourceInfo(in);
 
             IngestionResult result = client.ingestFromStream(info, ingestionProperties);
@@ -330,6 +322,8 @@ public class AzureAdxIngestProcessor extends AbstractProcessor {
                 Thread.sleep(50);
                 statuses = result.getIngestionStatusCollection();
             }
+
+            getLogger().info("Operation status: " + statuses.get(0).status);
 
             if(statuses.get(0).status == OperationStatus.Succeeded)
             {
